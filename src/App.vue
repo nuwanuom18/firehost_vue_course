@@ -1,28 +1,28 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <header>
+      <h1>Vue Voxer</h1>
+      <p>Realtime Voice Chat</p>
+    </header>
+
+    <router-view></router-view> 
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import {auth} from './firebase'
+console.log(auth)
+// check auth is correct or not
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+  
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
