@@ -11,11 +11,12 @@ Vue.use(firestorePlugin) // work with realtime data in this app
 Vue.config.productionTip = false
 
 import Home from './components/Home'
-
+import ChatRoom from './components/ChatRoom'
 
 const router = new VueRouter({
   routes : [
-    {path : '/', component: Home}
+    {path : '/', component: Home},
+    {path : '/chats/:id', component: ChatRoom, name:'chat'}
   ]
 })
 
