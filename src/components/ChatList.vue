@@ -3,7 +3,7 @@
 <template>
     <div>
         <ul>
-            <li v-for="chat of chats" :key='chat.id'>
+            <li  v-for="chat of chats" :key='chat.id'>
                 <router-link :to="{name: 'chat', params: {id: chat.id}}"> {{chat.id}}</router-link>
             </li>
         </ul>
@@ -39,3 +39,4 @@ export default {
     props: ['uid']
 }
 </script>
+

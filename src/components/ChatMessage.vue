@@ -3,7 +3,7 @@
     <div class="message" :class="{'from-user' : owner}">
         {{message.text}}
         <br>
-        <audio v-if="message.audioURL" :src="message.audioURL" controls></audio>
+        <audio v-if="message.audioURL" :src="message.audioURL" controls></audio><br>
         <img v-if="message.imageURL" class="preview" height="268" width="356" :src="message.imageURL" />
         <span class="sender">from UID {{message.sender}}</span>
     </div>
@@ -20,8 +20,8 @@ export default {
 .message {
   background: #dddddd;
   color: black;
-  margin-left: 10px;
-  margin-right: auto;
+  margin: 10px;
+  
   border-radius: 5px;
   padding: 12px;
   display: inline-block;
@@ -32,6 +32,6 @@ export default {
   background: #91bbff;
 }
 .sender {
-  font-size: 0.5rem;
+  font-size: 0.7rem;
 }
 </style>

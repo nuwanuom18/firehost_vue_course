@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="appvue">
     <header>
       <h1 >Vue Chat App</h1>
       <p class="message1">- Realtime Voice Chat -</p>
@@ -24,6 +24,13 @@ export default {
 </script>
 
 <style>
+header{
+  text-align: center;
+  margin: 50px;
+}
+.appvue{
+  text-align: center;
+}
   .message1{
     font-family: 'Courier New', Courier, monospace;
   }
@@ -31,6 +38,10 @@ export default {
     font-family: 'Courier New', Courier, monospace;
   }
   button{
+    margin: 10px;
+    min-width: 100px;
+    min-height: 50px;
+    background: cornflowerblue;
     font-family: cursive;
   }
 </style>

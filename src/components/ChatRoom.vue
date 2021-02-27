@@ -11,6 +11,7 @@
         </li>
       </ul>
 
+    <div class="chatroomuser">
       <textarea
         placeholder="type message here .."
         v-model="newMessageText"
@@ -39,7 +40,7 @@
 
       <button v-if="!recorder" @click="record()">Record</button>
       <button v-else @click="stop()">Stop</button>
-      <h5>Record Audio</h5>
+      
       <audio v-if="newAudio" :src="newAudioURL" controls></audio>
 
       <button
@@ -51,6 +52,7 @@
       >
         Send
       </button>
+      </div>
     </User>
   </main>
 </template>
@@ -197,4 +199,14 @@ ul {
 li {
   display: flex;
 }
+textarea{
+    min-width: 500px;
+    min-height: 40px;
+    text-align: center;
+    align-items: center;
+    padding-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 </style>

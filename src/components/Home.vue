@@ -1,9 +1,7 @@
 // Home Component
 <template>
     <div>
-        <h3>
-            Hello Home
-        </h3>
+        
         <User v-slot:user="{user}">
             
             <div v-if="user">
