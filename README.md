@@ -1,4 +1,4 @@
-# project1
+# Firehost Vue Course (Vuejs + firebase)
 
 ## Project setup
 ```
