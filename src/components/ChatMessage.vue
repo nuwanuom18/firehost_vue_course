@@ -4,6 +4,7 @@
         {{message.text}}
         <br>
         <audio v-if="message.audioURL" :src="message.audioURL" controls></audio>
+        <img v-if="message.imageURL" class="preview" height="268" width="356" :src="message.imageURL" />
         <span class="sender">from UID {{message.sender}}</span>
     </div>
 </template>

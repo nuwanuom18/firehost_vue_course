@@ -1,34 +1,58 @@
 <template>
-    <main>
-        <h3> Welcome to ChatRoom {{chatId}}</h3>
-        <User #user="{user}">
-            <ul>
-                <li v-for="message of messages" :key="message.id">
-                    <ChatMessage :message="message"
-                    :owner="user.uid === message.sender"
+  <main>
+    <h3>Welcome to ChatRoom {{ chatId }}</h3>
+    <User #user="{ user }">
+      <ul>
+        <li v-for="message of messages" :key="message.id">
+          <ChatMessage
+            :message="message"
+            :owner="user.uid === message.sender"
+          />
+        </li>
+      </ul>
 
-                    />
-                </li>
-            </ul>
+      <textarea
+        placeholder="type message here .."
+        v-model="newMessageText"
+        cols="40"
+        rows="5"
+      ></textarea>
+      <hr />
 
-           
-            <textarea placeholder="type message here .." v-model='newMessageText'  cols="40" rows="5"></textarea>
-            <hr>
+      <!--- Adding new feature Picture --->
 
-            <!--- Adding new feature Picture --->
+      <div>
+        <button @click="choose">Add picture</button>
+        <input
+          type="file"
+          ref="input1"
+          style="display: none"
+          @change="previewImage"
+          accept="image/*"
+        />
+      </div>
 
-            <button v-if="!picture" @click="addPicture()">Send Photo</button>
+      <div v-if="picture != null">
+        <img class="preview" height="268" width="356" :src="newPictureURL" />
+        <br />
+      </div>
 
+      <button v-if="!recorder" @click="record()">Record</button>
+      <button v-else @click="stop()">Stop</button>
+      <h5>Record Audio</h5>
+      <audio v-if="newAudio" :src="newAudioURL" controls></audio>
 
-
-            <button v-if="!recorder" @click="record()">Record</button>
-            <button v-else @click="stop()">Stop</button>
-            <h5>Record Audio</h5>
-            <audio v-if="newAudio" :src="newAudioURL" controls></audio>
-
-            <button :class="{ 'is-loading': loading }"  :disabled="!newMessageText || loading " class="button is-success" type="text" @click="addMessage(user.uid)">Send</button>
-        </User>
-    </main>
+      <button
+        :class="{ 'is-loading': loading }"
+        :disabled="!newMessageText || loading"
+        class="button is-success"
+        type="text"
+        @click="addMessage(user.uid)"
+      >
+        Send
+      </button>
+    </User>
+  </main>
 </template>
 
 <script>
@@ -49,6 +73,8 @@ export default {
             newAudio: null,
             recorder: null,
             picture: null,
+            imageURL : '',
+            uploadValue : 0
 
         }
     },
@@ -61,6 +87,9 @@ export default {
         },
         newAudioURL(){
             return URL.createObjectURL(this.newAudio);
+        },
+        newPictureURL(){
+            return URL.createObjectURL(this.picture);
         }
 
     },
@@ -82,17 +111,29 @@ export default {
                 audioURL = await storageRef.getDownloadURL();
             }
 
+            // Upload photo method //
+
+            let imageURL=null;
+            const storageRef = storage.ref('chats').child(this.chatId).child(`${messageId}.jpg`);
+            await storageRef.put(this.picture)
+            imageURL = await storageRef.getDownloadURL();
+            
             await this.messagesCollection.doc(messageId).set({
                 text: this.newMessageText,
                 sender: uid,
                 createdAt: Date.now(),
-                audioURL
+                audioURL,
+                imageURL
 
             })
+
+            
+            
 
             this.loading = false
             this.newMessageText =''
             this.newAudio = null
+            this.picture = null
         },
 
         async record(){
@@ -124,24 +165,36 @@ export default {
         async stop(){
             this.recorder.stop()
             this.recorder = null
-        }
+        },
+        choose() {
+        this.$refs.input1.click()   
+        },
+
+        previewImage(event) {
+        this.uploadValue=0;
+        this.imageURL=null;
+        this.picture = event.target.files[0];
+        },
+
     }
 }
+    
+
 </script>
 
 <style>
-ul{
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    min-width: 500px;
-    background: #efefef;
-    padding: 10px;
-    border-radius: 0;
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 500px;
+  background: #efefef;
+  padding: 10px;
+  border-radius: 0;
 }
-li{
-    display: flex;
+li {
+  display: flex;
 }
 </style>
